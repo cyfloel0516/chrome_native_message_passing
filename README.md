@@ -12,8 +12,9 @@ Thus in this example, I simplify some codes and also show how to use the python 
 1. Install: run `install.bat` to install the script
 2. Compile the java code and generate the executable
 
-...`javac -d ./ *.java`
-...`jar cfm MessageHandler.jar message_handler_manifest.txt *.class`
+`javac -d ./ *.java`
+
+`jar cfm MessageHandler.jar message_handler_manifest.txt *.class`
 
 ## Chrome extension side
 In my example, I use the extension from my another project to make the demo, you can find the demo here(https://github.com/cyfloel0516/video_caption_chrome_extension/tree/native_message) and the background script is under the `scripts/background` folder. 
