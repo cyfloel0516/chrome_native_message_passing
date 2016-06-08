@@ -1,0 +1,9 @@
+{
+  "name": "com.jy.syr.chrome_native_message_passing",
+  "description": "Chrome Native Messaging API Example Host",
+  "path": "native-messaging-host.bat",
+  "type": "stdio",
+  "allowed_origins": [
+        "chrome-extension://nbjcjfkfpaecklnloplkcjikpdkmcjfc/"
+  ]
+}
