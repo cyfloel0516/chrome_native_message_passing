@@ -19,15 +19,14 @@ if sys.platform == "win32":
 def send_message(message):
    # Write message size.
 	sys.stdout.write(struct.pack('i', len(message)).decode('UTF-8'))
-	
 	# Write the message itself.
-	
 	sys.stdout.write(message)
 	sys.stdout.flush()
 	
 # Thread that reads messages from the webapp.
 def read_thread_func():
 	message_number = 0
+	p = subprocess.Popen(["java", "-jar", os.path.dirname(os.path.realpath(__file__)) + "/test.jar"],shell=True, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
 	while 1:
 		# Read the message length (first 4 bytes).
 		text_length_bytes = sys.stdin.buffer.read(4)
@@ -40,17 +39,33 @@ def read_thread_func():
 		#request = json.loads(text)
 		# p = subprocess.Popen(["java", "-jar", os.path.dirname(os.path.realpath(__file__)) + "/MessageHandler.jar"], stdout=subprocess.PIPE)
 		# text = p.communicate()[0]
+
+		# p = subprocess.Popen(["cmd"],shell=True, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
 		command = request["message"]
+
 		if command == "ACTIVE":
 			# active the STT application
-				# receive the application response and tell the chrome extension the application is ready
+			# receive the application response and tell the chrome extension the application is ready
 			# mock
-			time.sleep(5)
-			send_message('{"command": "%s"}' % "ready")
-		elif command == "LISTEN":
+			p.stdin.write(b'ACTIVE\r\n')
+			p.stdin.flush()
+			result = p.stdout.readline().decode('utf-8')[0: -2]
+			send_message('{"command": "%s"}' % result)
+
+			# send_message('{"command": "%s"}' % "2")
+			# text = p.communicate("asd\n")[0]
+			# send_message('{"command": "%s"}' % "12345")
+			# return;
+			# text = p.stdout.readline()
+			# text = "12345123"
+			# send_message('{"command": "%s"}' % text)
+		elif command == "SPEAKING":
 			# mock
-			time.sleep(5)
-			send_message('{"command": "%s"}' % "Make bookmark")
+
+			p.stdin.write(b'SPEAKING\r\n')
+			p.stdin.flush()
+			result = p.stdout.readline().decode('utf-8')[0: -2]
+			send_message('{"command": "%s", "result": "%s"}' % ("ACTION", result))
 		else:
 			send_message('{"command": "%s"}' % "Unknown")
 

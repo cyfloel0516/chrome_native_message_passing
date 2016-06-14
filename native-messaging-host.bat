@@ -5,4 +5,4 @@
 :: found in the LICENSE file.
 
 :: java -jar "%~dp0/NativeMessageReceiver.jar %*
-python "%~dp0/NativeMessageReceiver.py" %*
+python "%~dp0/VoiceCommand.py" %*
